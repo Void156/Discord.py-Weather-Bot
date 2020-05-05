@@ -11,7 +11,7 @@ Then to get your API keys used in the settings, goto:
 https://home.openweathermap.org/users/sign_up<br/>
 https://locationiq.com/register
 
-Place each API key in their respective variable by opening the weather.py file.
+Place each API key in the settings file by editing settings.json with a text editor.
 
 Next get your bot token from:
 

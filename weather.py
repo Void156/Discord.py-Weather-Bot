@@ -2,14 +2,21 @@ import requests
 import json
 import discord
 from discord.ext import commands
-#Settings
-locationiq = ""
-openweather = ""
-discordtoken = ""
-prefix = "$"
+
+
+#Import Settings - Dont edit here, edit the settings.json file.
+with open('settings.json', 'r') as myfile:
+    settingsfile = myfile.read()
+    settings = json.loads(settingsfile)
+locationiq = settings["locationiq"]
+openweather = settings["openweather"]
+discordtoken = settings["discordtoken"]
+prefix = settings["prefix"]
 
 bot = commands.Bot(command_prefix='' + prefix, description='A weather reporting bot.')
-
+@bot.event
+async def on_ready():
+    print("Bot Ready.")
 @bot.command()
 async def weather(ctx, a: str):
     lociqreq = requests.get("https://eu1.locationiq.com/v1/search.php?key=" + locationiq + "&q=" + a + "&format=json&limit=1")
