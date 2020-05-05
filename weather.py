@@ -16,19 +16,20 @@ prefix = settings["prefix"]
 bot = commands.Bot(command_prefix='' + prefix, description='A weather reporting bot.')
 @bot.event
 async def on_ready():
+    print("Warning you are using the dev version!!!!")
     print("Bot Ready.")
 @bot.command()
 async def weather(ctx, a: str):
     async with aiohttp.ClientSession() as session:
         async with  session.get("https://eu1.locationiq.com/v1/search.php?key=" + locationiq + "&q=" + a + "&format=json&limit=1") as resploc:
-            print(await resploc.text)
-            json_data = json.loads(resploc.text)
+            data = await resploc.text()
+            json_data = json.loads(data)
             lat = json_data[0]["lat"]
             lon = json_data[0]["lon"]
 
         async with session.get("https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon +"&appid=" + openweather + "&units=metric") as respope:
-            print(await respope.text)
-            json_data1 = json.loads(respope.text)
+            data1 = await respope.text()
+            json_data1 = json.loads(data1)
             temp = json_data1["current"]["temp"]
             conditions = json_data1["current"]["weather"][0]["description"]
             humidity = json_data1["current"]["humidity"]
@@ -41,7 +42,7 @@ async def weather(ctx, a: str):
         embed.add_field(name="Humidity", value="" + str(humidity) + "%", inline=False)
         embed.add_field(name="Pressure", value="" + str(pressure) + " hPa", inline=False)
         embed.add_field(name="Visibility", value="" + str(visibility) + " Meters", inline=False)
-        embed.set_footer(text="Weatherly BOT", icon_url="https://library.kissclipart.com/20180917/csw/kissclipart-weather-icon-clipart-weather-rain-clip-art-77feae16d88a32d1.png")
+        embed.set_footer(text="Weatherly DEVELOPMENT VERSION", icon_url="https://library.kissclipart.com/20180917/csw/kissclipart-weather-icon-clipart-weather-rain-clip-art-77feae16d88a32d1.png")
         await ctx.send(embed=embed)
 
 bot.run(discordtoken)
