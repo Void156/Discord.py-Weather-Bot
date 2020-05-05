@@ -30,6 +30,7 @@ async def weather(ctx, a: str):
     embed.add_field(name="Humidity", value="" + str(humidity) + "%", inline=False)
     embed.add_field(name="Pressure", value="" + str(pressure) + " hPa", inline=False)
     embed.add_field(name="Visibility", value="" + str(visibility) + " Meters", inline=False)
+    embed.set_footer(text="Void#1123's WeatherBot", icon_url="https://library.kissclipart.com/20180917/csw/kissclipart-weather-icon-clipart-weather-rain-clip-art-77feae16d88a32d1.png")
     await ctx.send(embed=embed)
 
 bot.run(discordtoken)
