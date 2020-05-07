@@ -3,7 +3,6 @@ import json
 import discord
 from discord.ext import commands
 
-
 #Import Settings - Dont edit here, edit the settings.json file.
 with open('settings.json', 'r') as myfile:
     settingsfile = myfile.read()
@@ -19,9 +18,10 @@ async def on_ready():
     print("Warning you are using the dev version!!!!")
     print("Bot Ready.")
 @bot.command()
-async def weather(ctx, a: str):
+async def weather(ctx, *, arg):
     async with aiohttp.ClientSession() as session:
-        async with  session.get("https://eu1.locationiq.com/v1/search.php?key=" + locationiq + "&q=" + a + "&format=json&limit=1") as resploc:
+        print(arg)
+        async with  session.get("https://eu1.locationiq.com/v1/search.php?key=" + locationiq + "&q=" + arg.replace(" ", "%20") + "&format=json&limit=1") as resploc:
             data = await resploc.text()
             json_data = json.loads(data)
             try:
@@ -35,15 +35,21 @@ async def weather(ctx, a: str):
                     humidity = json_data1["current"]["humidity"]
                     pressure = json_data1["current"]["pressure"]
                     visibility = json_data1["current"]["visibility"]
-
-                embed = discord.Embed(title=a, color=0x57eee6)
-                embed.add_field(name="Temperature", value="" + str(temp) + " Celcius", inline=False)
-                embed.add_field(name="Current", value="" + str(conditions), inline=False)
-                embed.add_field(name="Humidity", value="" + str(humidity) + "%", inline=False)
-                embed.add_field(name="Pressure", value="" + str(pressure) + " hPa", inline=False)
-                embed.add_field(name="Visibility", value="" + str(visibility) + " Meters", inline=False)
-                embed.set_footer(text="Weatherly DEVELOPMENT VERSION", icon_url="https://library.kissclipart.com/20180917/csw/kissclipart-weather-icon-clipart-weather-rain-clip-art-77feae16d88a32d1.png")
-                await ctx.send(embed=embed)
+                    timezone = json_data1["timezone"]
+                    async with session.get("http://worldtimeapi.org/api/timezone/" + timezone) as resptim:
+                        data2 = await resptim.text()
+                        json_data2 = json.loads(data2)
+                        currenttime = json_data2["datetime"]
+                        currenttime1 = currenttime.replace("T", "  ")
+                        embed = discord.Embed(title=arg, color=0x57eee6)
+                        embed.add_field(name="Temperature", value="" + str(temp) + " Celcius", inline=False)
+                        embed.add_field(name="Current", value="" + str(conditions), inline=False)
+                        embed.add_field(name="Humidity", value="" + str(humidity) + "%", inline=False)
+                        embed.add_field(name="Pressure", value="" + str(pressure) + " hPa", inline=False)
+                        embed.add_field(name="Visibility", value="" + str(visibility) + " Meters", inline=False)
+                        embed.add_field(name="Time", value="" + currenttime1[:-13])
+                        embed.set_footer(text="Weatherly DEVELOPMENT VERSION", icon_url="https://library.kissclipart.com/20180917/csw/kissclipart-weather-icon-clipart-weather-rain-clip-art-77feae16d88a32d1.png")
+                        await ctx.send(embed=embed)
             except KeyError:
                 await ctx.send("Error, invalid city.")
        
