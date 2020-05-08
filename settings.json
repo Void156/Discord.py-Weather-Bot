@@ -3,5 +3,5 @@
     "openweather":"",
     "discordtoken":"",
     "prefix":"$",
-    "development":"1"
+    "development":"0"
 }
