@@ -11,11 +11,21 @@ locationiq = settings["locationiq"]
 openweather = settings["openweather"]
 discordtoken = settings["discordtoken"]
 prefix = settings["prefix"]
+isdevelopment = settings["development"]
+
+
+if isdevelopment == "1":
+    devmessage = "Weatherly Development Version"
+else:
+    devmessage = "Weatherly Stable Version"
 
 bot = commands.Bot(command_prefix='' + prefix, description='A weather reporting bot.')
 @bot.event
 async def on_ready():
-    print("Stable Version.")
+    if isdevelopment == "1":
+        print("Development Version Detected!")
+    else:
+        print("Stable Version Detected")
     print("Bot Ready.")
 @bot.command()
 async def weather(ctx, *, arg):
@@ -47,8 +57,9 @@ async def weather(ctx, *, arg):
                         embed.add_field(name="Humidity", value="" + str(humidity) + "%", inline=False)
                         embed.add_field(name="Pressure", value="" + str(pressure) + " hPa", inline=False)
                         embed.add_field(name="Visibility", value="" + str(visibility) + " Meters", inline=False)
+                        embed.add_field(name="Lat/Long", value="" +  str(lat) + ", " + str(lon), inline=False)
                         embed.add_field(name="Time", value="" + currenttime1[:-13])
-                        embed.set_footer(text="Weatherly Stable", icon_url="https://library.kissclipart.com/20180917/csw/kissclipart-weather-icon-clipart-weather-rain-clip-art-77feae16d88a32d1.png")
+                        embed.set_footer(text="" + devmessage, icon_url="https://library.kissclipart.com/20180917/csw/kissclipart-weather-icon-clipart-weather-rain-clip-art-77feae16d88a32d1.png")
                         await ctx.send(embed=embed)
             except KeyError:
                 await ctx.send("Error, invalid city.")
