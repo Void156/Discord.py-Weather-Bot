@@ -2,5 +2,6 @@
     "locationiq":"",
     "openweather":"",
     "discordtoken":"",
-    "prefix":"$"
+    "prefix":"$",
+    "development":"1"
 }
