@@ -1,5 +1,4 @@
-# WeatherBot Development Branch!
-This branch is for new experimental features, it may be broken or have a few bugs.
+# WeatherBot
 A discord weather bot that checks the current weather from any **CITY** in the world.
 
 ## Installation
