@@ -2,11 +2,9 @@
 A discord weather bot that checks the current weather from any **CITY** in the world.
 
 ## Installation
-Use pip to install dependencies
-```
-pip install requests json Discord discord.ext
-```
-Then to get your API keys used in the settings, goto:
+Run setup.py to get started
+
+Then visit both URLS below and sign up to get your API keys.
 
 https://home.openweathermap.org/users/sign_up<br/>
 https://locationiq.com/register
@@ -29,5 +27,5 @@ This will return an embed with information about the weather in that city.
 
 ## Getting Help
 
-If you need help please message me on Discord: Void#1123
+If you need help please message me on Discord: Kilian#1234
 or just create an issue in this repository.
