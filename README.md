@@ -2,7 +2,10 @@
 A discord weather bot that checks the current weather from any **CITY** in the world.
 
 ## Installation
-Run setup.py to get started
+Run the following command to get started:
+```
+python setup.py build
+```
 
 Then visit both URLS below and sign up to get your API keys.
 
