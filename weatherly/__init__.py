@@ -4,9 +4,9 @@ import discord
 from discord.ext import commands
 
 #Import Settings - Dont edit here, edit the settings.json file.
-with open('settings.json', 'r') as myfile:
-    settingsfile = myfile.read()
-    settings = json.loads(settingsfile)
+with open('settings.json', 'r') as settingsfile:
+    settingsread = settingsfile.read()
+    settings = json.loads(settingsread)
 locationiq = settings["locationiq"]
 openweather = settings["openweather"]
 discordtoken = settings["discordtoken"]
@@ -64,5 +64,3 @@ async def weather(ctx, *, arg):
             except KeyError:
                 await ctx.send("Error, invalid city.")
        
-
-bot.run(discordtoken)
